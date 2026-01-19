@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamePortal - Мир компьютерных игр</title>
+    <link rel="icon" type="image/x-icon" href="порно.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #0c0c14;
+            color: #e0e0e0;
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230c0c14"/><path d="M0,50 L100,50 M50,0 L50,100" stroke="%231a1a2e" stroke-width="0.5"/></svg>');
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Шапка */
+        header {
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            padding: 15px 0;
+            border-bottom: 2px solid #d32f2f;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            color: #d32f2f;
+            font-size: 32px;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .logo-text span {
+            color: #d32f2f;
+        }
+        
+        /* Навигация */
+        nav ul {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(211, 47, 47, 0.1);
+            border-color: #d32f2f;
+        }
+        
+        .nav-link.active {
+            background-color: #d32f2f;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            gap: 40px;
+            margin: 40px 0;
+            align-items: center;
+        }
+        
+        .main-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            border: 1px solid #333;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .main-info {
+            flex: 1;
+        }
+        
+        .main-info h1 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 32px;
+            line-height: 1.2;
+        }
+        
+        .main-info p {
+            margin-bottom: 20px;
+            color: #b0b0b0;
+            font-size: 16px;
+        }
+        
+        .info-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .info-btn:hover {
+            background: #b71c1c;
+        }
+        
+        .more-info {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 6px;
+            border-left: 4px solid #d32f2f;
+        }
+        
+        .more-info h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        /* Блоки с играми */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            color: #fff;
+            font-size: 28px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #d32f2f;
+            margin: 10px auto;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .game-card {
+            background: #1a1a2e;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid #2a2a3e;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .game-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .game-content {
+            padding: 20px;
+        }
+        
+        .game-title {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .game-description {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .game-rating {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .game-platform {
+            background: #333;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        /* Футер */
+        footer {
+            background: #1a1a2e;
+            color: #aaa;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-section p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .contact-info {
+            margin-top: 15px;
+        }
+        
+        .contact-info div {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-info i {
+            color: #d32f2f;
+            width: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #d32f2f;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        /* Дополнительные стили */
+        .game-year {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .newsletter {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .newsletter h3 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #444;
+            background: #2a2a3e;
+            color: #fff;
+            border-radius: 4px;
+        }
+        
+        .newsletter-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .game-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-gamepad logo-icon"></i>
+                <div class="logo-text">Game<span>Portal</span></div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#main" class="nav-link active">Главная</a></li>
+                    <li><a href="#games" class="nav-link">Игры</a></li>
+                    <li><a href="#news" class="nav-link">Новости</a></li>
+                    <li><a href="#reviews" class="nav-link">Обзоры</a></li>
+                    <li><a href="#forum" class="nav-link">Форум</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Основной контент -->
+        <section class="main-content" id="main">
+            <div class="main-image">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg" 
+                     alt="The Witcher 3: Wild Hunt"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7h.jpg'">
+            </div>
+            <div class="main-info">
+                <h1>Добро пожаловать в мир компьютерных игр</h1>
+                <p>GamePortal - ваш надежный источник информации о видеоиграх. У нас вы найдете свежие новости, подробные обзоры, рейтинги игр и активное сообщество геймеров.</p>
+                <p>Мы освещаем все платформы: PC, PlayStation, Xbox, Nintendo Switch и мобильные устройства. Наша цель - помочь вам выбрать следующую игру для прохождения.</p>
+                <button class="info-btn" id="moreInfoBtn">Подробнее о проекте</button>
+                <div class="more-info" id="moreInfo">
+                    <h3>Наша миссия</h3>
+                    <p>С 2015 года мы создаем крупнейшее русскоязычное сообщество геймеров. На сайте публикуются эксклюзивные материалы, интервью с разработчиками и еженедельные подборки лучших игр.</p>
+                    <p>Ежедневно наши редакторы проверяют десятки источников, чтобы предоставлять только проверенную и актуальную информацию об игровой индустрии.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Популярные игры -->
+        <h2 class="section-title" id="games">Популярные игры 2024</h2>
+        <div class="games-grid">
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg" 
+                     alt="Elden Ring" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Elden Ring</h3>
+                    <p class="game-description">Эпическая action-RPG от создателей Dark Souls с открытым миром, созданным в соавторстве с Джорджем Мартином.</p>
+                    <div class="game-year">2022</div>
+                    <div class="game-meta">
+                        <div class="game-rating">94/100</div>
+                        <div class="game-platform">PC, PS5, XSX</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/header.jpg" 
+                     alt="Baldur's Gate 3" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co5wxs.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Baldur's Gate 3</h3>
+                    <p class="game-description">Глубокая ролевая игра, основанная на правилах Dungeons & Dragons, с богатым сюжетом и тактическими боями.</p>
+                    <div class="game-year">2023</div>
+                    <div class="game-meta">
+                        <div class="game-rating">96/100</div>
+                        <div class="game-platform">PC, PS5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg" 
+                     alt="Red Dead Redemption 2" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co2p1d.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Red Dead Redemption 2</h3>
+                    <p class="game-description">Приключение на Диком Западе с детализированным миром и захватывающей историей о банде Ван дер Линде.</p>
+                    <div class="game-year">2019</div>
+                    <div class="game-meta">
+                        <div class="game-rating">97/100</div>
+                        <div class="game-platform">PC, PS4, XB1</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1817190/header.jpg" 
+                     alt="Cyberpunk 2077" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co2r0h.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Cyberpunk 2077</h3>
+                    <p class="game-description">Ролевая игра в стиле киберпанк от создателей Ведьмака с нелинейным сюжетом и огромным городом Найт-Сити.</p>
+                    <div class="game-year">2020</div>
+                    <div class="game-meta">
+                        <div class="game-rating">86/100</div>
+                        <div class="game-platform">PC, PS5, XSX</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" 
+                     alt="Counter-Strike 2" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co1r5a.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Counter-Strike 2</h3>
+                    <p class="game-description">Бесплатный тактический шутер с обновленной графикой и улучшенной игровой механикой для соревновательных матчей.</p>
+                    <div class="game-year">2023</div>
+                    <div class="game-meta">
+                        <div class="game-rating">88/100</div>
+                        <div class="game-platform">PC</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1240440/header.jpg" 
+                     alt="Hogwarts Legacy" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co5f75.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Hogwarts Legacy</h3>
+                    <p class="game-description">Приключенческая игра по вселенной Гарри Поттера, где вы становитесь студентом Хогвартса в 1800-х годах.</p>
+                    <div class="game-year">2023</div>
+                    <div class="game-meta">
+                        <div class="game-rating">84/100</div>
+                        <div class="game-platform">PC, PS5, XSX</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Рассылка -->
+        <div class="newsletter">
+            <h3>Подпишитесь на игровую рассылку</h3>
+            <p>Получайте еженедельные подборки лучших игр, эксклюзивные материалы и новости индустрии</p>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Ваш email" required>
+                <button type="submit" class="newsletter-btn">Подписаться</button>
+            </div>
+        </div>
+
+        <!-- Предстоящие релизы -->
+        <h2 class="section-title" id="news">Ожидаемые релизы</h2>
+        <div class="games-grid">
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg" 
+                     alt="Dragon's Dogma 2" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co6c4p.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Dragon's Dogma 2</h3>
+                    <p class="game-description">Продолжение культовой action-RPG с улучшенной системой спутников и огромным открытым миром.</p>
+                    <div class="game-year">Март 2024</div>
+                    <div class="game-meta">
+                        <div class="game-rating">Ожидается</div>
+                        <div class="game-platform">PC, PS5, XSX</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg" 
+                     alt="Black Myth: Wukong" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co61bk.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Black Myth: Wukong</h3>
+                    <p class="game-description">Action-RPG по мотивам китайского классического романа "Путешествие на Запад" с потрясающей графикой.</p>
+                    <div class="game-year">Август 2024</div>
+                    <div class="game-meta">
+                        <div class="game-rating">Ожидается</div>
+                        <div class="game-platform">PC, PS5, XSX</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/218620/header.jpg" 
+                     alt="Warhammer 40,000: Space Marine 2" 
+                     class="game-image"
+                     onerror="this.src='https://images.igdb.com/igdb/image/upload/t_cover_big/co5f6s.jpg'">
+                <div class="game-content">
+                    <h3 class="game-title">Space Marine 2</h3>
+                    <p class="game-description">Эпический шутер по вселенной Warhammer 40,000 с масштабными битвами против тиранидов.</p>
+                    <div class="game-year">Сентябрь 2024</div>
+                    <div class="game-meta">
+                        <div class="game-rating">Ожидается</div>
+                        <div class="game-platform">PC, PS5, XSX</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>О GamePortal</h3>
+                    <p>Самый полный русскоязычный ресурс о видеоиграх. Мы публикуем новости, обзоры, гайды и поддерживаем активное сообщество геймеров.</p>
+                    <div class="contact-info">
+                        <div><i class="fas fa-map-marker-alt"></i> Москва, ул. Геймерская, 15</div>
+                        <div><i class="fas fa-envelope"></i> info@gameportal.ru</div>
+                        <div><i class="fas fa-phone"></i> +7 (495) 123-45-67</div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="#main">Главная страница</a></li>
+                        <li><a href="#games">Каталог игр</a></li>
+                        <li><a href="#news">Игровые новости</a></li>
+                        <li><a href="#reviews">Обзоры и рецензии</a></li>
+                        <li><a href="#forum">Игровой форум</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Наши соцсети</h3>
+                    <p>Присоединяйтесь к нашему сообществу в социальных сетях:</p>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-vk"></i> ВКонтакте</a></li>
+                        <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2015-2024 GamePortal.ru. Все права защищены.</p>
+                <p>Все торговые марки и материалы являются собственностью соответствующих владельцев.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Раскрытие дополнительной информации
+        document.getElementById('moreInfoBtn').addEventListener('click', function() {
+            const moreInfo = document.getElementById('moreInfo');
+            const isVisible = moreInfo.style.display === 'block';
+            
+            moreInfo.style.display = isVisible ? 'none' : 'block';
+            this.textContent = isVisible ? 'Подробнее о проекте' : 'Скрыть информацию';
+            
+            if (!isVisible) {
+                moreInfo.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+
+        // Плавная навигация
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Обновление активной ссылки
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Обработка формы подписки
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('.newsletter-input');
+            const email = emailInput.value.trim();
+            
+            if (email && validateEmail(email)) {
+                alert('Спасибо за подписку! Проверьте вашу почту для подтверждения.');
+                emailInput.value = '';
+            } else {
+                alert('Пожалуйста, введите корректный email адрес.');
+                emailInput.focus();
+            }
+        });
+
+        // Валидация email
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Обработка ошибок загрузки изображений
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                console.log('Ошибка загрузки изображения: ' + this.alt);
+            });
+        });
+
+        // Прокрутка к началу при загрузке
+        window.addEventListener('load', function() {
+            if (window.location.hash) {
+                const targetElement = document.querySelector(window.location.hash);
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+        });
+
+        // Изменение шапки при прокрутке
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.backgroundColor = 'rgba(26, 26, 46, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.backgroundColor = '';
+                header.style.backdropFilter = '';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
